@@ -88,3 +88,27 @@ In this task, we study how environment variables are affected when a new program
 When running the setuid program, we see that yes in fact the environment variables set in the shell (parent) process get set in the child process.
 
 ### 2.6 Task 6: The PATH Environment Variable and Set-UID Programs
+
+![alt text](../images/myls_invocation.png)
+
+In order to get this setuid program to run some malicious code, we could consider editing the environment variables such that the $PATH is different and resolves "ls" to another program than `/usr/bin/ls`
+
+### 2.7 Task 7: The LD PRELOAD Environment Variable and Set-UID Programs
+
+![alt text](../images/my-prog-ld-path.png)
+
+![alt text](../images/labuser.png)
+
+
+### 2.8 Task 8: Invoking External Programs Using system() versus execve()
+
+![alt text](../images/catall_one.png)
+
+It doesn't immediately seem aparent how to compromise the system using the "catall" program, trying to cat /bin/sh for example produces binary output.  The same happens using execve().  It would seem that an attack would have to use an LD_PRELOAD to change the invocation of "printf()"
+
+
+### 2.9 Task 9: Capability Leaking
+
+![alt text](../images/capability_leak.png)
+
+It seems that the capability leak code doesn't release the file descriptor of `/etc/zzz/` and when trying to access it in vi from the new shell, it produces output that crashes the shell which is a vulnerability.
