@@ -23,6 +23,7 @@ int bof(char *str)
     return 1;
 }
 
+// This function will be used in the optional task
 void foo(){
     static int i = 1;
     printf("Function foo() is invoked %d times\n", i++);
