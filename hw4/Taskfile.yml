@@ -26,6 +26,11 @@ tasks:
     cmds:
       - "sudo ln -sf /bin/zsh /bin/sh"
 
+  link_sh_to_dash:
+    desc: "Removes the /bin/dash link and replaces it with a /bin/zsh/ link"
+    cmds:
+      - "sudo ln -sf /bin/dash /bin/sh"
+
   build:
     desc: "Build the retlib binary"
     cmds:
