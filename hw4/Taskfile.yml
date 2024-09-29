@@ -1,0 +1,38 @@
+version: '3'
+
+vars:
+  TARGET: "retlib"
+  N: "12"
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  enable_aslr:
+    desc: "Enable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=2"
+      - "cat /proc/sys/kernel/randomize_va_space"
+
+  disable_aslr:
+    desc: "Disable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=0"
+      - "cat /proc/sys/kernel/randomize_va_space"
+
+  link_sh_to_zsh:
+    desc: "Removes the /bin/dash link and replaces it with a /bin/zsh/ link"
+    cmds:
+      - "sudo ln -sf /bin/zsh /bin/sh"
+
+  build:
+    desc: "Build the retlib binary"
+    cmds:
+      - "gcc -m32 -DBUF_SIZE={{.N}} -fno-stack-protector -z noexecstack -o {{.TARGET}} {{.TARGET}}.c"
+      - "sudo chown root {{.TARGET}} && sudo chmod 4755 {{.TARGET}}"
+
+  clean:
+    desc: "Clean up generated files"
+    cmds:
+      - "rm -f *.o *.out {{.TARGET}} badfile"
