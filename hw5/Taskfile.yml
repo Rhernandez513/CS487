@@ -54,3 +54,13 @@ tasks:
     cmds:
       - cp server ../fmt-containers
       - cp format-* ../fmt-containers
+
+  compose:
+    desc: "Build docker compose stack"
+    cmds:
+      - docker compose build
+
+  run:
+    desc: "Injects payload using python"
+    cmds:
+      - echo $(python3 attack-code/build_string_v3.py) | nc 10.9.0.5 9090
