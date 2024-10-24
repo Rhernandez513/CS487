@@ -97,6 +97,22 @@ When executing our attack with netcat, we cause the format program to print the 
 ![alt text](./images/task_2B_complete.png)
 
 ## Task 3: Modifying the Server Program's Memory
+
+My solution for Task 3 is located at `./attack-code/task_2A_stack_data.py`
+Invoke it similarly to the solution for Task 2
+
+
+With the va_list pointer aligned at the 64th element, we replace "%x" with "%n" and we cause the program to write at the address of va_list the number of bytes printed up until the %n format specifier was encountered.
+
+
+```c
+s = "%.8x."* 63 + "%n"
+```
+We then observe that the value of the target variable was written by our format string attack:
+
+![alt text](./images/task_3_complete.png)
+
+
 ## Task 4: Inject Malicious Code into the Server Program
 ## Task 5: Attacking the 64-bit Server Program
 ## Task 6: Fixing the Problem

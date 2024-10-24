@@ -82,3 +82,8 @@ tasks:
     desc: "Injects payload using python"
     cmds:
       - echo $(python3 attack-code/task_2B_heap_data.py) | nc 10.9.0.5 9090
+
+  run_task3:
+    desc: "Injects payload using python"
+    cmds:
+      - echo $(python3 attack-code/task_3.py) | nc 10.9.0.5 9090
