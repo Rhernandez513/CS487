@@ -8,7 +8,6 @@ content = bytearray(0x0 for i in range(N))
 # Fill the content with NOP's
 # content = bytearray(0x90 for i in range(N))
 
-# number  = 0xbfffeeee
 number  = 0xdeadbeef
 content[0:4]  =  (number).to_bytes(4,byteorder='little')
 

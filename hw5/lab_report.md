@@ -21,30 +21,61 @@ Injecting inital payload to format program
 
 After changing the line `build_string.py` program line 
 
-`# s = "%.8x"*1200 + "%n"`
+```c
+# s = "%.8x"*1200 + "%n"
+```
 to 
-`s = "%s"*12`
+```c
+s = "%s"*12
+```
 
 `format` Program crashes as expected:
 
 ![alt text](./images/format_program_crash.png)
 
-## Task 2: Printing out the Server Program's Memory
+My solution for Task 1 is located at `./attack-code/task_1_crash_program.py`
+
+Start the docker compose stack, and invoke it with
+
+```sh
+$ task run_task1
+````
+then Press Ctrl+C.
+
+We use a format string with twelve (12) %s format string modifiers to encounter the first memory address that is invalid.
 
 
+### Task 2: Printing out the Server Program's Memory
 
 ### Task 2.A: Stack Data
 
+My solution for Task 2A is located at `./attack-code/task_2A_stack_data.py`
 
-I used a binary search style to quickly find that the program needs at least 746 "%x" format specifiers to produce execution behavior that causes it to print my payload and some stack data.  I found this by taking line 17 of the build_string.py program and both editing the chars produced and by increasing the count from 12 by powers of 10 until I found it caused the desired behavior at 1200 format specifiers.  I then halved the count of format specifiers and would increase them by half the distance to the last and so on: 12=>120=>1200=>600=>900=>750=>675 etc etc until i found 746 as the minimum number of format specifiers
 
-After some 
+Start the docker compose stack, and invoke it with
+
+`
+$ task run_task2A
+`
+
+then Press Ctrl+C.
+
+We use the python program to create an input buffer with a number at it's highest memory value and a sequence four dummy chars "abcd" (not important to the solution), followed by sixty-four (64) modified "%x" modifiers.  The literal string used was "%.8x. which serves to make the program output slightly more human readable by placing full stops between memory elements. 
+
+The 64th index was found through trial and error by first printing quite a bit of the stack and experimenting with smaller values.
 
 ![alt text](./images/print_program_memory.png)
 
+Importantly, we observe that the program prints the bytes as a string instead of as a number.
+
+![alt text](./images/task_2A_complete.png)
+
+This observation is significant because it here at the 64th index that we observe the alignment of the va_list pointer in printf with the data that we injected at runtime through user input "3735928559" as a hexademical number "0xdeadbeef".
+
+
 ### Task 2.B: Heap Data
 
-After some effort I was able to start finding and printing strings from the stack, the image belows finding the offset for the "abcd" string using 12 format specifiers and printing it using `%s`.  My next step is to the find the secret message on the stack.
+~~After some effort I was able to start finding and printing strings from the stack, the image belows finding the offset for the "abcd" string using 12 format specifiers and printing it using `%s`.  My next step is to the find the secret message on the stack.~~
 
 ![alt text](./images/initial_stack_print.png)
 
