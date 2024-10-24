@@ -1,0 +1,84 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  enable_aslr:
+    desc: "Enable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=2"
+      - "cat /proc/sys/kernel/randomize_va_space"
+
+  disable_aslr:
+    desc: "Disable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=0"
+      - "cat /proc/sys/kernel/randomize_va_space"
+
+  build:
+    desc: "Build all targets"
+    cmds:
+      - task: server
+      - task: format-32
+      - task: format-64
+      - task: install
+      - task: compose
+
+  server:
+    desc: "Build the server executable"
+    dir: "server-code"
+    cmds:
+      - gcc -o server server.c -static
+
+  format-32:
+    desc: "Build the 32-bit format executable"
+    dir: "server-code"
+    cmds:
+      - gcc -DBUF_SIZE=100 -z execstack -static -m32 -o format-32 format.c
+
+  format-64:
+    desc: "Build the 64-bit format executable"
+    dir: "server-code"
+    cmds:
+      - gcc -DBUF_SIZE=100 -z execstack -o format-64 format.c
+
+  compose:
+    desc: "Build docker compose stack"
+    cmds:
+      - docker compose build
+
+  clean:
+    desc: "Clean up build artifacts"
+    dir: "server-code"
+    cmds:
+      - rm -f badfile server format-32 format-64
+      - docker compose down
+
+  install:
+    desc: "Install executables to the fmt-containers directory"
+    dir: "server-code"
+    cmds:
+      - cp server ../fmt-containers
+      - cp format-* ../fmt-containers
+
+  compose:
+    desc: "Build docker compose stack"
+    cmds:
+      - docker compose build
+
+  run_task1:
+    desc: "Injects payload using python"
+    cmds:
+      - echo $(python3 attack-code/task_1_crash_program.py) | nc 10.9.0.5 9090
+
+  run_task2A:
+    desc: "Injects payload using python"
+    cmds:
+      - echo $(python3 attack-code/task_2A_stack_data.py) | nc 10.9.0.5 9090
+
+  run_task2B:
+    desc: "Injects payload using python"
+    cmds:
+      - echo $(python3 attack-code/task_2B_heap_data.py) | nc 10.9.0.5 9090
