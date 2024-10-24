@@ -60,7 +60,17 @@ tasks:
     cmds:
       - docker compose build
 
-  run:
+  run_task1:
     desc: "Injects payload using python"
     cmds:
-      - echo $(python3 attack-code/build_string_v3.py) | nc 10.9.0.5 9090
+      - echo $(python3 attack-code/task_1_crash_program.py) | nc 10.9.0.5 9090
+
+  run_task2A:
+    desc: "Injects payload using python"
+    cmds:
+      - echo $(python3 attack-code/task_2A_stack_data.py) | nc 10.9.0.5 9090
+
+  run_task2B:
+    desc: "Injects payload using python"
+    cmds:
+      - echo $(python3 attack-code/task_2B_heap_data.py) | nc 10.9.0.5 9090
