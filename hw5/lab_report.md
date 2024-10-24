@@ -75,9 +75,26 @@ This observation is significant because it here at the 64th index that we observ
 
 ### Task 2.B: Heap Data
 
-~~After some effort I was able to start finding and printing strings from the stack, the image belows finding the offset for the "abcd" string using 12 format specifiers and printing it using `%s`.  My next step is to the find the secret message on the stack.~~
+My solution for Task 2A is located at `./attack-code/task_2A_stack_data.py`
 
-![alt text](./images/initial_stack_print.png)
+
+Start the docker compose stack, and invoke it with
+
+`
+$ task run_task2B
+`
+
+then Press Ctrl+C.
+
+With the va_list pointer aligned at the 64th element, we replace "%x" with "%s" and we replace the bytes for our number with the address on the heap of the char buffer of the string we want to print using the "%s" format modifier.
+
+```c
+s = "%.8x."* 63 + "%s"
+```
+
+When executing our attack with netcat, we cause the format program to print the buffer at the memory address we injected over the network via user input.
+
+![alt text](./images/task_2B_complete.png)
 
 ## Task 3: Modifying the Server Program's Memory
 ## Task 4: Inject Malicious Code into the Server Program
