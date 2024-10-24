@@ -1,6 +1,6 @@
 # Lab Report: Format String Attack Lab
 
-Robert D. Hernandez rherna70@uic.edu
+Robert D. Hernandez <rherna70@uic.edu>
 
 ## Env Setup
 
