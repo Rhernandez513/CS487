@@ -1,3 +1,7 @@
+*format-32
+*format-64
+*server
+
 .gdbhistory
 *badfile
 ### C ###

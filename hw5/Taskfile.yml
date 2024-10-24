@@ -23,6 +23,8 @@ tasks:
       - task: server
       - task: format-32
       - task: format-64
+      - task: install
+      - task: compose
 
   server:
     desc: "Build the server executable"
@@ -42,11 +44,17 @@ tasks:
     cmds:
       - gcc -DBUF_SIZE=100 -z execstack -o format-64 format.c
 
+  compose:
+    desc: "Build docker compose stack"
+    cmds:
+      - docker compose build
+
   clean:
     desc: "Clean up build artifacts"
     dir: "server-code"
     cmds:
       - rm -f badfile server format-32 format-64
+      - docker compose down
 
   install:
     desc: "Install executables to the fmt-containers directory"
