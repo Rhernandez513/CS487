@@ -1,5 +1,14 @@
+# CS487 Building Secure Computer Systems <!-- omit in toc -->
 
-### 1.What (new things) you have learned?
+- [What (new things) you have learned?](#what-new-things-you-have-learned)
+- [Briefly describe 1~2 key messages you learned that make you excited. Why?](#briefly-describe-12-key-messages-you-learned-that-make-you-excited-why)
+- [Thoughts on Eliminating Memory Safety Issues with Unlimited Research Funds](#thoughts-on-eliminating-memory-safety-issues-with-unlimited-research-funds)
+
+[Memory Safety Bugs Keynote](https://www.youtube.com/watch?v=3FaZtjb8Rwk) Report
+
+Robert D. Hernandez <rherna70@uic.edu>
+
+## What (new things) you have learned?
 
 1. **Memory Safety Bugs as Dominant Security Issues**: Memory safety issues, such as use-after-free and buffer overflow, are pervasive across software, accounting for about 70% of security vulnerabilities. These issues are not merely linked to low-level languages but are viewed as fundamental problems in memory abstractions themselves.
 
@@ -11,7 +20,7 @@
 
 5. **Explicit Opt-In for Unsafe Operations**: Rust's approach requires developers to explicitly mark unsafe operations, making potential memory safety risks an intentional decision. This practice significantly reduces the likelihood of accidental vulnerabilities, as developers must carefully evaluate any operation that could compromise safety.
 
-### 2. Briefly describe 1~2 key messages you learned that make you excited. Why?
+## Briefly describe 1~2 key messages you learned that make you excited. Why?
 
 
 **Message 1**: *Memory safety is a core abstraction problem, not just a language-level issue.* Recognizing that memory safety is fundamentally about how memory is abstracted rather than simply the result of language choice is crucial. It highlights the need for robust memory management principles across all levels of software development, not only in low-level systems programming. This broad perspective encourages solutions that can apply to a range of languages, beyond just C or C++.
@@ -20,7 +29,7 @@
 
 These two messages are impactful because they reshape our understanding of memory safety as a structural issue rather than a problem inherent to specific languages. Rust’s model shows that memory safety can be practically enforced through language features, encouraging the adoption of similar principles in both existing and new languages.
 
-### 3. Thoughts on Eliminating Memory Safety Issues with Unlimited Research Funds
+## Thoughts on Eliminating Memory Safety Issues with Unlimited Research Funds
 
 Tackling memory safety with unlimited resources would involve research into language and hardware design, widespread educational initiatives, and partnerships to create a culture that prioritizes memory safety across software development. With unlimited funds, a multi-layered, systematic approach is appropriate, combining advances in technology with developer-friendly tools and education, to truly eliminate memory safety issues.  My funding allocation plan would consist of:
 
