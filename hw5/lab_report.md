@@ -146,6 +146,9 @@ We see the value of our target integer changes to our target value:
 
 ![alt text](./images/task_3B_complete.png)
 
+
+### Task 3C: Change the value to 0xAABBCCDD.
+
 ## Task 4: Inject Malicious Code into the Server Program
 ## Task 5: Attacking the 64-bit Server Program
 ## Task 6: Fixing the Problem
