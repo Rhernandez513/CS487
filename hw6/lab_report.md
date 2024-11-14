@@ -70,6 +70,45 @@ We notice that the first two files that were less than 16 bytes were padded to 1
 Finally we decrypt and view the padded bytes using a hexdump tool:
 ![alt text](images/task4/decrypt-and-hexdump.png)
 
+
 ## Task 5:
+
+### 5.1: Create a text file that is at least 1000 bytes long.
+
+```sh
+dd if=/dev/urandom of=output_file.bin bs=1 count=1000
+```
+
+### 5.2 Encrypt the file using the AES-128 cipher
+
+```sh
+openssl enc -aes-128-cbc -e -in output_file.bin -out output_file_cipher.bin \
+    -K 00112233445566778889aabbccddeeff \
+    -iv 0102030405060708
+```
+### 5.3 Oh no! One byte got corrupted
+
+```sh
+xxd -r -s 54 -l 4 -p <(echo deadbeef) output_file_cipher.bin
+```
+### 5.4 Decrypt and hexdump corrupted version and compare with original
+
+We can clearly demonstrate that changing one byte of an encrypted file stops it from being decrypted correctly entirely
+
+Corrupted version
+![alt text](images/task5/hexdump_corrupted.png)
+
+Original version
+![alt text](images/task5/hexdump_original.png)
+
+Comparing using vimdiff for good measure
+
+```sh
+vimdiff <(hexdump output_file_corrupted_dec.bin) <(hexdump output_file.bin)
+```
+![alt text](images/task5/vimdiff.png)
+
+This doesn't entire hold with the theory of ECB, CBC, CFB, and OFB which where we should expect only a small amount of data to be undecryptable, where the theory would purport that we would only loose a single 16 byte block for ECB and CFB mode, 2 16-byte blocks for CBC, and only the single corrupted byte for OFB.  Perhaps I made a  mistake decrypting.
+
 ## Task 6:
 ## Task 7:
