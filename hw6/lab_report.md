@@ -1,12 +1,18 @@
-# Lab Report: Secret Key Encryption Lab
+# Lab Report: Secret Key Encryption Lab <!-- omit in toc -->
+- [Task 1: Frequency Analysis](#task-1-frequency-analysis)
+- [Task 2:](#task-2)
+- [Task 3:](#task-3)
+- [Task 4:](#task-4)
+  - [4.2](#42)
+- [Task 5:](#task-5)
+  - [5.1: Create a text file that is at least 1000 bytes long.](#51-create-a-text-file-that-is-at-least-1000-bytes-long)
+  - [5.2 Encrypt the file using the AES-128 cipher](#52-encrypt-the-file-using-the-aes-128-cipher)
+  - [5.3 Oh no! One byte got corrupted](#53-oh-no-one-byte-got-corrupted)
+  - [5.4 Decrypt and hexdump corrupted version and compare with original](#54-decrypt-and-hexdump-corrupted-version-and-compare-with-original)
+- [Task 6:](#task-6)
+- [Task 7:](#task-7)
 
 Robert D. Hernandez <rherna70@uic.edu>
-
-## Env Setup
-
-Disable Address Space Layout Randomization
-
-`sudo sysctl -w kernel.randomize_va_space=0`
 
 ## Task 1: Frequency Analysis
 
