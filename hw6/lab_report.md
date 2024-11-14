@@ -55,6 +55,21 @@ And the image encrypted with CFB mode here:
 We do not see any useful information from the encrypted picture
 
 ## Task 4:
+
+Requiring padding for an given cipher algorithm is really a function of whether we use block cipher or not.  If we use a block cipher, the plaintext must be the same size as the block cipher encryption which we can right-size using padding.  Converting a block cipher to a stream cipher elimintates this need.
+
+### 4.2
+First we create the files:
+![alt text](images/task4/create_f1_f1_f3.png)
+
+Then we create encrypted versions using `-aes-128-cbc`
+![alt text](images/task4/encrypted-sizes.png)
+
+We notice that the first two files that were less than 16 bytes were padded to 16 bytes and we see that curious enough the one that was 16 bytes was padded to 32 bytes.
+
+Finally we decrypt and view the padded bytes using a hexdump tool:
+![alt text](images/task4/decrypt-and-hexdump.png)
+
 ## Task 5:
 ## Task 6:
 ## Task 7:
