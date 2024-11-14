@@ -17,6 +17,25 @@ tr 'ytnvupmuqxifahlbrcdzgsokejw' 'THEANDINSOLVCRWFGMYUBKJXPQZ' < ciphertext.txt 
 ```
 
 ## Task 2:
+
+Below you can see the encryption commands I used, I tried all three cipher modes described, it seems like my vm did not support `-bf-cbc`
+
+```sh
+openssl enc -aes-128-cbc -e -in plain.txt -out cipher.bin \
+    -K 00112233445566778889aabbccddeeff \
+    -iv 0102030405060708
+
+openssl enc -bf-cbc -e -in plain.txt -out cipher.bin \
+    -K 00112233445566778889aabbccddeeff \
+    -iv 0102030405060708
+
+openssl enc -aes-128-cfb -e -in plain.txt -out cipher.bin \
+    -K 00112233445566778889aabbccddeeff \
+    -iv 0102030405060708
+```
+
+![alt text](images/task2.png)
+
 ## Task 3:
 ## Task 4:
 ## Task 5:
