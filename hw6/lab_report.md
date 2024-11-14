@@ -37,6 +37,23 @@ openssl enc -aes-128-cfb -e -in plain.txt -out cipher.bin \
 ![alt text](images/task2.png)
 
 ## Task 3:
+
+I was able to encrypt the picture using CBC mode, which was straightforward, although my machine did not support ECB mode so I will also encrypt and compare with CFB mode
+
+![alt text](images/task3/pic_enc_one.png)
+
+Commands used for re-writing the header hex values so we can render the image:
+
+![alt text](images/task3/enrypting_images_interactively.png)
+
+And the image encrypted with CBC mode here:
+![alt text](images/task3/pic_cbc_enc.bmp)
+
+And the image encrypted with CFB mode here:
+![alt text](images/task3/pic_cfb_enc.bmp)
+
+We do not see any useful information from the encrypted picture
+
 ## Task 4:
 ## Task 5:
 ## Task 6:
