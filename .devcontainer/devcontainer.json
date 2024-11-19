@@ -36,8 +36,7 @@
 			"version": "latest"
 		},
 		"ghcr.io/devcontainers-extra/features/neovim-apt-get:1": {},
-		"ghcr.io/devcontainers-extra/features/tmux-apt-get:1": {},
-		"ghcr.io/devcontainers-extra/features/btop-homebrew:1": {}
+		"ghcr.io/devcontainers-extra/features/tmux-apt-get:1": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

@@ -6,6 +6,7 @@
         "vscodevim.vim",
         "tomoki1207.pdf",
         "ms-vscode.cpptools-extension-pack",
-        "yzane.markdown-pdf"
+        "yzane.markdown-pdf",
+        "mutantdino.resourcemonitor"
     ]
 }
