@@ -1,0 +1,27 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+  install-pwntools:
+    cmds:
+      - sudo apt-get install -y python3-dev git libssl-dev libffi-dev build-essential
+      - python3 -m pip install --upgrade pip
+      - python3 -m pip install --upgrade pwntools
+    silent: false
+  install-pwndbg:
+    cmds:
+      - git clone https://github.com/pwndbg/pwndbg
+      - cd pwndbg && ./setup.sh
+    silent: false
+
+  install-devtools:
+    deps: [ install-pwntools, install-pwndbg ]
+    silent: false
