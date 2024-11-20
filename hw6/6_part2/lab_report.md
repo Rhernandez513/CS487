@@ -17,10 +17,14 @@ Calculate the private key d.
 
 First n was calculated to be "n=E103ABD94892E3E74AFD724BF28E78366D9676BCCC70118BD0AA1968DBB143D1"
 
+phi(n) = (p - 1) * (q - 1)
+phi(n) = D2E88FE4EEB33F597D5F1B0D2D96EDD5156C94EC27065CFB268768CA1738BBC4
+
 
 Note: Using Wolfram Alpha, the Decimal value of p was found to be 329520679814142392965336341297134588639
 Note: Using Wolfram Alpha, the Decimal value of q was found to be 308863399973593539130925275387286220623
 Note: The decimal value of e was small enouch to fit in a programmer's calculator and was found to be 886979
+Note: n and phi(n) were computed using the <openssl/bn.h>
 
 ## Task 2:
 ## Task 3:

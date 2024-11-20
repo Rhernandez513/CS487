@@ -1,0 +1,23 @@
+version: '3'
+
+
+tasks:
+  setup:
+    cmds:
+      - curl -o Crypto_RSA.pdf https://seedsecuritylabs.org/Labs_20.04/Files/Crypto_RSA/Crypto_RSA.pdf
+      - curl -o Labsetup.zip https://seedsecuritylabs.org/Labs_20.04/Files/Crypto_RSA/Labsetup.zip
+      - unzip Labsetup.zip
+      - rm Labsetup.zip
+    silent: false
+  run:
+    cmds:
+      - ./taskone
+    silent: false
+  build:
+    cmds:
+      - gcc taskone.c -o taskone -lcrypto
+    silent: false
+  clean:
+    cmds:
+      - rm -f taskone *.o
+    silent: false
