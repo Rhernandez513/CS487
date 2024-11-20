@@ -25,6 +25,8 @@ int main ()
   BIGNUM *n = BN_new();
   BIGNUM *phi_n = BN_new();
   BIGNUM *one = BN_new();
+  BIGNUM *e = BN_new();
+  BIGNUM *d = BN_new();
 
   // BN_generate_prime_ex(a, NBITS, 1, NULL, NULL, NULL);
   // BN_dec2bn(&b, "273489463796838501848592769467194369268");
@@ -33,10 +35,16 @@ int main ()
   // Initialize constant of one
   BN_dec2bn(&one, "1");
 
-  // Initialize p, q, n
+  // Initialize n, d
+  BN_dec2bn(&d, "1");
+  BN_dec2bn(&n, "1");
+
+  // Initialize Public key e as given
+  BN_hex2bn(&e, "0D88C3");
+
+  // Initialize p, q, which are given
   BN_hex2bn(&p, "F7E75FDC469067FFDC4E847C51F452DF");
   BN_hex2bn(&q, "E85CED54AF57E53E092113E62F436F4F");
-  BN_rand(n, NBITS, 0, 0);
 
   // Initialize what will be (p -1) and (q - 1)
   BN_rand(p_prime, NBITS, 0, 0);
@@ -59,6 +67,11 @@ int main ()
   BN_mul(res, p_prime, q_prime, ctx);
   phi_n = res;
   printBN("phi(n)=", phi_n);
+
+  // compute the smallest d such that e * d mod phi(n) = 1
+  BN_mod_inverse(res, e, n, ctx);
+  d = res;
+  printBN("d=", d);
 
   return 0;
 }
