@@ -2,7 +2,6 @@
 FROM mcr.microsoft.com/devcontainers/base:noble
 
 # Install any necessary dependencies
-# For example, install Node.js, npm, and Python
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository ppa:zhangsongcui3371/fastfetch && \
