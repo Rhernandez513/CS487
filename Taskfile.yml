@@ -10,11 +10,27 @@ tasks:
     cmds:
       - echo "{{.GREETING}}"
     silent: true
+
+  enable_aslr:
+    desc: "Enable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=2"
+      - "cat /proc/sys/kernel/randomize_va_space"
+
+  disable_aslr:
+    desc: "Disable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=0"
+      - "cat /proc/sys/kernel/randomize_va_space"
+  install-pre-requisites:
+    cmds:
+      - sudo apt install -y nala 
+      - sudo nala install -y python3-dev git libssl-dev libffi-dev build-essential
+    silent: false
   install-pwntools:
     cmds:
-      - sudo apt-get install -y python3-dev git libssl-dev libffi-dev build-essential
-      - python3 -m pip install --upgrade pip
-      - python3 -m pip install --upgrade pwntools
+      - python3 -m pip install --upgrade --break-system-packages pip
+      - python3 -m pip install --upgrade --break-system-packages pwntools
     silent: false
   install-pwndbg:
     cmds:
@@ -22,6 +38,9 @@ tasks:
       - cd pwndbg && ./setup.sh
     silent: false
 
-  install-devtools:
-    deps: [ install-pwntools, install-pwndbg ]
+  install-tools:
+    cmds:
+      - task: install-pre-requisites
+      - task: install-pwntools
+      - task: install-pwndbg
     silent: false
