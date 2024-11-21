@@ -4,6 +4,8 @@ Robert D. Hernandez <rherna70@uic.edu>
 
 ## Task 1: Deriving the Private Key
 
+My solution is in `taskone.c`
+
 Let p,q and e be three prime numbers.  Let n = p*q.  We will use (e, n) as the public key.
 
 Given:
@@ -30,7 +32,7 @@ Note: n, phi(n), and d were computed using the <openssl/bn.h>
 
 ## Task 2: Encrypting a Message
 
-My solution is in tasktwo.c
+My solution is in `tasktwo.c`
 
 I found the encryped version of the message was "6FB078DA550B2650832661E14F4F8D2CFAEF475A0DF3A75CACDC5DE5CFC5FADC" in hex.  I checked that the encryption was correct by decrypting the message.
 
@@ -44,7 +46,21 @@ BigNumber as string: Decrypted string: A top secret!
 
 ![alt text](images/tasktwo.png)
 
-## Task 3:
+## Task 3: Decrypting a Message
+
+Decrypt: C = 8C0F971DF2F3672B28811407E2DABBE1DA0FEBBBDFC7DCB67396567EA1E2493F
+
+My solution is in `taskthree.c` I found the ciphertext to decrypt to "Password is dees"
+
+```
+vscode ➜ /workspaces/CS487/hw6/6_part2 (hw6/rsa-pub-key-ecryption-and-sig-lab) $ task run
+task: [run] ./taskthree
+decrypted c= 50617373776F72642069732064656573
+Decrypted string: Password is dees
+```
+
+![alt text](images/taskthree.png)
+
 ## Task 4:
 ## Task 5:
 ### 5.1:
