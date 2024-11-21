@@ -10,7 +10,7 @@ tasks:
     silent: false
   run:
     cmds:
-      - ./taskfour
+      - ./taskfive
     silent: false
   build:
     cmds:
@@ -18,6 +18,7 @@ tasks:
       - gcc tasktwo.c -o tasktwo -lcrypto
       - gcc taskthree.c -o taskthree -lcrypto
       - gcc taskfour.c -o taskfour -lcrypto
+      - gcc taskfive.c -o taskfive -lcrypto
     silent: false
   clean:
     cmds:
@@ -25,4 +26,5 @@ tasks:
       - rm -f tasktwo *.o
       - rm -f taskthree *.o
       - rm -f taskfour*.o
+      - rm -f taskfive*.o
     silent: false

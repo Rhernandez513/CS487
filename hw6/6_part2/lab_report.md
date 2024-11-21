@@ -75,7 +75,27 @@ M = I owe you $3000
 
 Comparing the two digital signatures we can see there is a large difference in the hex value even though we only changed one byte of the input string
 
-## Task 5:
+## Task 5: Verifying a Signature
+
+My solution is in taskfive.c
+
+ M = "Launch a missile."
+
+ Let pubic key: (e, n)
+
+M = Launch a missile.
+S = 643D6F34902D9C7EC90CB0B2BCA36C47FA37165C0005CAB026C0542CBDB6802F
+e = 010001 (this hex value equals to decimal 65537)
+n = AE1CD4DC432798D933779FBD46C6E1247F0CF1233595113AA51B450F18116115
+
+try retrieve M using
+
+res = S^e mod n
+
+if res = M => verified
+
+![alt text](images/taskfive.png)
+
 ### 5.1:
 ## Task 6:
 ## Task 7:
