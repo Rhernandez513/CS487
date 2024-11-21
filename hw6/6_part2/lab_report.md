@@ -61,7 +61,20 @@ Decrypted string: Password is dees
 
 ![alt text](images/taskthree.png)
 
-## Task 4:
+## Task 4: Signing a Message
+
+M = I owe you $2000
+
+We know that: Digital Signature = m^d mod n
+
+![alt text](images/taskfour-one.png)
+
+M = I owe you $3000
+
+![alt text](images/four-two.png)
+
+Comparing the two digital signatures we can see there is a large difference in the hex value even though we only changed one byte of the input string
+
 ## Task 5:
 ### 5.1:
 ## Task 6:
