@@ -10,13 +10,15 @@ tasks:
     silent: false
   run:
     cmds:
-      - ./taskone
+      - ./tasktwo
     silent: false
   build:
     cmds:
       - gcc taskone.c -o taskone -lcrypto
+      - gcc tasktwo.c -o tasktwo -lcrypto
     silent: false
   clean:
     cmds:
       - rm -f taskone *.o
+      - rm -f tasktwo *.o
     silent: false

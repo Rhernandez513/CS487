@@ -28,7 +28,22 @@ Note: Using Wolfram Alpha, the Decimal value of q was found to be 30886339997359
 Note: The decimal value of e was small enouch to fit in a programmer's calculator and was found to be 886979
 Note: n, phi(n), and d were computed using the <openssl/bn.h>
 
-## Task 2:
+## Task 2: Encrypting a Message
+
+My solution is in tasktwo.c
+
+I found the encryped version of the message was "6FB078DA550B2650832661E14F4F8D2CFAEF475A0DF3A75CACDC5DE5CFC5FADC" in hex.  I checked that the encryption was correct by decrypting the message.
+
+```sh
+vscode ➜ /workspaces/CS487/hw6/6_part2 (hw6/rsa-pub-key-ecryption-and-sig-lab) $ task run
+task: [run] ./tasktwo
+encrypted M= 6FB078DA550B2650832661E14F4F8D2CFAEF475A0DF3A75CACDC5DE5CFC5FADC
+decrypted c= 4120746F702073656372657421
+BigNumber as string: Decrypted string: A top secret!
+```
+
+![alt text](images/tasktwo.png)
+
 ## Task 3:
 ## Task 4:
 ## Task 5:
