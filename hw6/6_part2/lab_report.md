@@ -1,5 +1,14 @@
 # Lab Report: Secret Key Encryption Lab <!-- omit in toc -->
 
+- [Task 1: Deriving the Private Key](#task-1-deriving-the-private-key)
+- [Task 2: Encrypting a Message](#task-2-encrypting-a-message)
+- [Task 3: Decrypting a Message](#task-3-decrypting-a-message)
+- [Task 4: Signing a Message](#task-4-signing-a-message)
+- [Task 5: Verifying a Signature](#task-5-verifying-a-signature)
+  - [5.1:](#51)
+- [Task 6:](#task-6)
+- [Task 7:](#task-7)
+
 Robert D. Hernandez <rherna70@uic.edu>
 
 ## Task 1: Deriving the Private Key
