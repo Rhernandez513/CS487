@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  enable_aslr:
+    desc: "Enable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=2"
+      - "cat /proc/sys/kernel/randomize_va_space"
+
+  disable_aslr:
+    desc: "Disable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=0"
+      - "cat /proc/sys/kernel/randomize_va_space"
