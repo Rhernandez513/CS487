@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  build_shellcode:
+    cmds:
+      - gcc -m32 -DBUF_SIZE=${N} -fno-stack-protector -z noexecstack -o call.shellcode call.shellcode.c
+      - sudo chown root call.shellcode
+      - sudo chmod 4755 call.shellcode
+      - gcc -m32 -DBUF_SIZE=${N} -fno-stack-protector -z noexecstack -o shellcode shellcode.c
+      - sudo chown root shellcode
+      - sudo chmod 4755 shellcode
+  clean:
+    cmds:
+      - rm -f *.o *.out call.shellcode badfile
+      - rm -f *.o *.out shellcode badfile

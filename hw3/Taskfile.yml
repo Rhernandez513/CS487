@@ -1,31 +1,21 @@
 version: '3'
 
 tasks:
+  build_stack:
+    cmds:
+      - gcc -DBUF_SIZE=100 -fno-stack-protector -z noexecstack -o stack stack.c
+	    - sudo chown root stack
+      - sudo chmod 4755 stack
+
+  clean:
+    cmds:
+      - rm stack
+
+  link_to_zsh:
+    cmds:
+      - sudo ln -sf /bin/zsh /bin/sh
   enable_aslr:
     desc: "Enable Address Space Layout Randomization (ASLR)"
     cmds:
       - "sudo sysctl -w kernel.randomize_va_space=2"
       - "cat /proc/sys/kernel/randomize_va_space"
-
-  disable_aslr:
-    desc: "Disable Address Space Layout Randomization (ASLR)"
-    cmds:
-      - "sudo sysctl -w kernel.randomize_va_space=0"
-      - "cat /proc/sys/kernel/randomize_va_space"
-
-  build_32_shellcode:
-    cmds:
-      - gcc -m32 -DBUF_SIZE=100 -fno-stack-protector -z noexecstack -o call.shellcode.32 call.shellcode.c
-	    - sudo chown root call.shellcode.32
-      - sudo chmod 4755 call.shellcode.32
-
-  build_shellcode:
-    cmds:
-      - gcc -DBUF_SIZE=100 -fno-stack-protector -z noexecstack -o call.shellcode call.shellcode.c
-	    - sudo chown root call.shellcode
-      - sudo chmod 4755 call.shellcode
-
-  clean:
-    cmds:
-      - rm call.shellcode
-      - rm call.shellcode.32
