@@ -1,19 +1,28 @@
 version: '3'
 
+includes:
+  shellcode:
+    taskfile: ./shellcode/Taskfile.yml
+    dir: ./shellcode
+
 tasks:
   build_stack:
     cmds:
       - gcc -DBUF_SIZE=100 -fno-stack-protector -z noexecstack -o stack stack.c
-	    - sudo chown root stack
+      - sudo chown root stack
       - sudo chmod 4755 stack
-
   clean:
     cmds:
       - rm stack
-
+      - task shellcode:clean
   link_to_zsh:
     cmds:
       - sudo ln -sf /bin/zsh /bin/sh
+  disable_aslr:
+    desc: "Disable Address Space Layout Randomization (ASLR)"
+    cmds:
+      - "sudo sysctl -w kernel.randomize_va_space=0"
+      - "cat /proc/sys/kernel/randomize_va_space"
   enable_aslr:
     desc: "Enable Address Space Layout Randomization (ASLR)"
     cmds:
