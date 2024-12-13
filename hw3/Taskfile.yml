@@ -6,15 +6,17 @@ includes:
     dir: ./shellcode
 
 tasks:
-  build_stack:
+  build:
     cmds:
       - gcc -DBUF_SIZE=100 -fno-stack-protector -z noexecstack -o stack stack.c
       - sudo chown root stack
       - sudo chmod 4755 stack
+      - task shellcode:build
   clean:
     cmds:
       - rm stack
       - task shellcode:clean
+      - rm badfile
   link_to_zsh:
     cmds:
       - sudo ln -sf /bin/zsh /bin/sh
