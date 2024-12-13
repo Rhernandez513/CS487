@@ -8,7 +8,7 @@ includes:
 tasks:
   build:
     cmds:
-      - gcc -g -m32 -DBUF_SIZE=100 -fno-stack-protector -z noexecstack -o stack stack.c
+      - gcc -g -DBUF_SIZE=100 -m32 -o stack -z execstack -fno-stack-protector stack.c
       - sudo chown root stack
       - sudo chmod 4755 stack
       - task shellcode:build
