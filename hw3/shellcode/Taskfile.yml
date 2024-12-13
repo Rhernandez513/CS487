@@ -3,10 +3,10 @@ version: '3'
 tasks:
   build:
     cmds:
-      - gcc -g -m32 -DBUF_SIZE=${N} -fno-stack-protector -z noexecstack -o call.shellcode call.shellcode.c
+      - gcc -g -m32 -DBUF_SIZE=${N} -fno-stack-protector -z execstack -o call.shellcode call.shellcode.c
       - sudo chown root call.shellcode
       - sudo chmod 4755 call.shellcode
-      - gcc -g -m32 -DBUF_SIZE=${N} -fno-stack-protector -z noexecstack -o shellcode shellcode.c
+      - gcc -g -m32 -DBUF_SIZE=${N} -fno-stack-protector -z execstack -o shellcode shellcode.c
       - sudo chown root shellcode
       - sudo chmod 4755 shellcode
   clean:

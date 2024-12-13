@@ -101,3 +101,19 @@ Traceback (most recent call last):
     content[offset:offset + L] = (ret).to_bytes(L,byteorder='little')
 OverflowError: int too big to convert
 ```
+
+
+I found that I was compiling `stack.c` in 64 bit mode and using a 64 bit address for the buffer start in `exploit.py` so after enabling the `-m32` flag I found the following values for `$ebp` and `&buffer`
+
+
+![alt text](images/32_bit_addrs.png)
+
+`$ebp=0xffffcc98`
+
+`&buffer=0xffffcc2c`
+
+After enabling stack execution with a compiler flag I was able to get a shell:
+
+![alt text](images/shell.png)
+
+## Task $: Launching Attack Without knowing Buffer Size (Level 2)
