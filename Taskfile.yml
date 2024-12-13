@@ -10,7 +10,9 @@ tasks:
     cmds:
       - echo "{{.GREETING}}"
     silent: true
-
+  link_to_zsh:
+    cmds:
+      - sudo ln -sf /bin/zsh /bin/sh
   enable_aslr:
     desc: "Enable Address Space Layout Randomization (ASLR)"
     cmds:
