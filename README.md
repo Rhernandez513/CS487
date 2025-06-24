@@ -10,4 +10,4 @@ Uses Taskfiles in place of or in addition to Makefiles.
 
 Prerequisites
 
-build-essential, pwndbg, pwntools, python3, gcc-multilib
+build-essential, pwndbg <https://github.com/pwndbg/pwndbg>, pwntools <https://github.com/Gallopsled/pwntools>, python3, gcc-multilib
